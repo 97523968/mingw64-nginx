@@ -1,0 +1,4 @@
+nginx release-1.26.2 37fe98355461d2f03d73e6a8e82ac4e4cd85d711
+pcre2 pcre2-10.44 6ae58beca071f13ccfed31d03b3f479ab520639b
+openssl openssl-3.3.2 fb7fab9fa6f4869eaa8fbb97e0d593159f03ffe4
+zlib v1.3.1 51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf

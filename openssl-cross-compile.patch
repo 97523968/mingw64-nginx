@@ -1,0 +1,12 @@
+diff --git a/Configurations/platform/mingw.pm b/Configurations/platform/mingw.pm
+index c4dbce8..79a808b 100644
+--- a/Configurations/platform/mingw.pm
++++ b/Configurations/platform/mingw.pm
+@@ -30,6 +30,7 @@ sub shlib_version_as_filename {
+     return $sover_filename;
+ }
+ sub sharedname {
++    return platform::BASE->sharedname($_[1]);
+     return platform::BASE::__concat(platform::BASE->sharedname($_[1]),
+                                     "-",
+                                     $_[0]->shlib_version_as_filename(),

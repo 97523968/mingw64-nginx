@@ -1,0 +1,103 @@
+diff --git a/auto/configure b/auto/configure
+index 5b88ebb..6e831d2 100755
+--- a/auto/configure
++++ b/auto/configure
+@@ -27,9 +27,9 @@ fi
+ if test -z "$NGX_PLATFORM"; then
+     echo "checking for OS"
+ 
+-    NGX_SYSTEM=`uname -s 2>/dev/null`
+-    NGX_RELEASE=`uname -r 2>/dev/null`
+-    NGX_MACHINE=`uname -m 2>/dev/null`
++    NGX_SYSTEM=MINGW64_NT-10.0-22631
++    NGX_RELEASE=3.5.3-d8b21b8c.x86_64
++    NGX_MACHINE=x86_64
+ 
+     echo " + $NGX_SYSTEM $NGX_RELEASE $NGX_MACHINE"
+ 
+diff --git a/auto/feature b/auto/feature
+index 3561f59..8f10cea 100644
+--- a/auto/feature
++++ b/auto/feature
+@@ -27,8 +27,10 @@ fi
+ 
+ cat << END > $NGX_AUTOTEST.c
+ 
++#if 0
+ #include <sys/types.h>
+ $NGX_INCLUDE_UNISTD_H
++#endif
+ $ngx_feature_incs
+ 
+ int main(void) {
+@@ -47,7 +49,7 @@ ngx_feature_inc_path=
+ eval "/bin/sh -c \"$ngx_test\" >> $NGX_AUTOCONF_ERR 2>&1"
+ 
+ 
+-if [ -x $NGX_AUTOTEST ]; then
++if [ -x $NGX_AUTOTEST.exe ]; then
+ 
+     case "$ngx_feature_run" in
+ 
+diff --git a/auto/lib/openssl/conf b/auto/lib/openssl/conf
+index fdf430d..93da228 100644
+--- a/auto/lib/openssl/conf
++++ b/auto/lib/openssl/conf
+@@ -55,7 +55,7 @@ if [ $OPENSSL != NONE ]; then
+ 
+ else
+ 
+-    if [ "$NGX_PLATFORM" != win32 ]; then
++    if [ 1 -o "$NGX_PLATFORM" != win32 ]; then
+ 
+         OPENSSL=NO
+ 
+diff --git a/auto/lib/pcre/conf b/auto/lib/pcre/conf
+index cdf1809..ed12c10 100644
+--- a/auto/lib/pcre/conf
++++ b/auto/lib/pcre/conf
+@@ -2,7 +2,6 @@
+ # Copyright (C) Igor Sysoev
+ # Copyright (C) Nginx, Inc.
+ 
+-
+ if [ $PCRE != NONE ]; then
+ 
+     if [ -f $PCRE/src/pcre2.h.generic ]; then
+@@ -68,7 +67,7 @@ if [ $PCRE != NONE ]; then
+ 
+ else
+ 
+-    if [ "$NGX_PLATFORM" != win32 ]; then
++    if [ 1 -o "$NGX_PLATFORM" != win32 ]; then
+         PCRE=NO
+     fi
+ 
+diff --git a/auto/lib/zlib/conf b/auto/lib/zlib/conf
+index 239592e..0d002ac 100644
+--- a/auto/lib/zlib/conf
++++ b/auto/lib/zlib/conf
+@@ -42,7 +42,7 @@ if [ $ZLIB != NONE ]; then
+ 
+ else
+ 
+-    if [ "$NGX_PLATFORM" != win32 ]; then
++    if [ 1 -o "$NGX_PLATFORM" != win32 ]; then
+         ZLIB=NO
+ 
+         # FreeBSD, Solaris, Linux
+diff --git a/auto/options b/auto/options
+index 6a6e990..4eca479 100644
+--- a/auto/options
++++ b/auto/options
+@@ -22,8 +22,8 @@ CPP=
+ NGX_OBJS=objs
+ 
+ NGX_DEBUG=NO
+-NGX_CC_OPT=
+-NGX_LD_OPT=
++NGX_CC_OPT=${NGX_CC_OPT:-}
++NGX_LD_OPT=${NGX_LD_OPT:-}
+ CPU=NO
+ 
+ NGX_RPATH=NO
